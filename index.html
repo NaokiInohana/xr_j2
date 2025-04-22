@@ -112,7 +112,7 @@
     }
 
     function startSendingLocation() {
-      locationInterval = setInterval(sendLocation, 1000);
+      locationInterval = setInterval(sendLocation, 3000);
       isSendingLocation = true;
       document.getElementById("status").innerText = "Status: Sending location...";
       updateButtonState(true);
