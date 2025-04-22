@@ -139,11 +139,11 @@
         return;
       }
 
-      generateDeviceId(); // 登録用IDを生成
-
-      connectWebSocket();
+      generateDeviceId(); // ← 先に生成！
+      connectWebSocket(); // ← その後にWebSocket開始
       startSendingLocation();
     });
+
 
     document.getElementById("stopButton").addEventListener("click", stopSendingLocation);
 
