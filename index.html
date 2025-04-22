@@ -29,7 +29,6 @@
     let websocketUrl = "";
 
     function generateDeviceId() {
-      // 記号を含まず英数字だけで作成
       const randomId = 'dev' + Math.random().toString(36).substring(2, 10);
       deviceId = randomId;
     }
@@ -133,17 +132,10 @@
 
     document.getElementById("startButton").addEventListener("click", () => {
       userDeviceId = document.getElementById("sendDeviceIdInput").value.trim();
-
-      if (!isValidDeviceId(userDeviceId)) {
-        alert("Invalid Device ID. Please enter a valid ID.");
-        return;
-      }
-
-      generateDeviceId(); // ← 先に生成！
-      connectWebSocket(); // ← その後にWebSocket開始
+      generateDeviceId();
+      connectWebSocket();
       startSendingLocation();
     });
-
 
     document.getElementById("stopButton").addEventListener("click", stopSendingLocation);
 
@@ -151,10 +143,6 @@
       document.getElementById("startButton").disabled =
         document.getElementById("sendDeviceIdInput").value.trim() === "";
     });
-
-    function isValidDeviceId(id) {
-      return /^[a-zA-Z0-9_-]{5,30}$/.test(id);
-    }
   </script>
 </body>
 </html>
