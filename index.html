@@ -69,6 +69,8 @@
         console.log("WebSocket connection closed.");
         document.getElementById("status").innerText = "Status: WebSocket closed.";
         updateButtonState(false);
+        clearInterval(locationInterval);
+        isSendingLocation = false;
       };
     }
 
@@ -121,6 +123,9 @@
     function stopSendingLocation() {
       clearInterval(locationInterval);
       isSendingLocation = false;
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.close();  // <-- 明示的に切断
+      }
       document.getElementById("status").innerText = "Status: Location sending stopped.";
       updateButtonState(false);
     }
@@ -142,6 +147,13 @@
     document.getElementById("sendDeviceIdInput").addEventListener("input", () => {
       document.getElementById("startButton").disabled =
         document.getElementById("sendDeviceIdInput").value.trim() === "";
+    });
+
+    // ブラウザの閉じる/リロード前にdisconnect送信
+    window.addEventListener("beforeunload", () => {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.close();
+      }
     });
   </script>
 </body>
